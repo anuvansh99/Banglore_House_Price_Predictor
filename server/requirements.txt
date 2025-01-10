@@ -1,3 +1,6 @@
 Flask==1.0.2
 numpy==1.16.2
 scikit-learn==0.20.3
+pip>=24.0
+setuptools>=56.0
+wheel>=0.36.0
