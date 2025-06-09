@@ -9,7 +9,7 @@ __model = None
 
 def get_estimated_price(location, sqft, bhk, bath):
     try:
-        loc_index = __data_columns.index(location.lower())
+        loc_index = __data_columns.index(location)
     except ValueError:
         loc_index = -1
 
