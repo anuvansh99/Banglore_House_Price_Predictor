@@ -8,6 +8,8 @@ __data_columns = None
 __model = None
 
 def get_estimated_price(location, sqft, bhk, bath):
+    # Normalize location input to lowercase to match columns.json
+    location = location.strip().lower()
     try:
         loc_index = __data_columns.index(location)
     except ValueError:
@@ -19,6 +21,9 @@ def get_estimated_price(location, sqft, bhk, bath):
     x[2] = bhk
     if loc_index >= 0:
         x[loc_index] = 1
+
+    if __model is None:
+        raise Exception("Model is not loaded. Call load_saved_artifacts() first.")
 
     return round(float(__model.predict([x])[0]), 2)
 
@@ -74,7 +79,7 @@ def get_data_columns():
 if __name__ == '__main__':
     load_saved_artifacts()
     print("Locations:", get_location_names())
-    print("Estimate 1:", get_estimated_price('1st Phase JP Nagar', 1000, 3, 3))
-    print("Estimate 2:", get_estimated_price('1st Phase JP Nagar', 1000, 2, 2))
-    print("Estimate 3:", get_estimated_price('Kalhalli', 1000, 2, 2))  # other location
-    print("Estimate 4:", get_estimated_price('Ejipura', 1000, 2, 2))   # other location
+    print("Estimate 1:", get_estimated_price('1st phase jp nagar', 1000, 3, 3))
+    print("Estimate 2:", get_estimated_price('1st phase jp nagar', 1000, 2, 2))
+    print("Estimate 3:", get_estimated_price('kalhalli', 1000, 2, 2))  # other location
+    print("Estimate 4:", get_estimated_price('ejipura', 1000, 2, 2))   # other location
